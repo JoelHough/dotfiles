@@ -1,0 +1,4 @@
+[[ $EMACS = t ]] && unsetopt zle
+alias E="SUDO_EDITOR=$EDITOR sudoedit" 
+alias e=$EDITOR
+alias dg=dotfile_git

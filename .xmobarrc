@@ -1,0 +1,25 @@
+Config { font = "xft:Anonymous Pro:size=10:antialias=true"
+       , position = TopW L 90
+       , bgColor = "black"
+       , fgColor = "grey"
+       , lowerOnStart = True
+       , commands = [ Run StdinReader
+                    , Run Date "%A %d-%m-%Y %H:%M:%S" "date" 10
+                    , Run Battery ["-t", "<fc=#80C0E0><acstatus></fc><left>(<timeleft>)"
+                                   , "--suffix", "True"
+                                   , "-p", "3"
+                                   , "-h", "green"
+                                   , "--normal", "yellow"
+                                   , "-l", "red"
+                                   , "--"
+                                   , "-O", "AC "
+                                   , "-o", ""
+                                   ] 10
+                    , Run Wireless "wlan0" ["-t", "<essid> <qualitybar>"
+                                           , "-f", "•"
+                                           , "-b", "·"
+                                           , "-W", "5"
+                                           , "-h", "green"] 10
+                    ]
+       , template = "%StdinReader%}{%get_vol% - <fc=#C0C060>%wlan0wi%</fc> - %battery% - <fc=#4080B0>%date%</fc> -"
+       }

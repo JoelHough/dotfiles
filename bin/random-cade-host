@@ -1,0 +1,16 @@
+#!/usr/bin/env ruby
+
+cadeHostsFile = File.expand_path('~/.cade_hosts')
+
+if !File.exists?(cadeHostsFile) || Time.now - File.mtime(cadeHostsFile) > 24 * 60 * 60 * 60 || File.read(cadeHostsFile).strip.empty?
+  status = `curl --silent http://www.cade.utah.edu/scripts/labstatus/`
+  File.open(cadeHostsFile, 'w') {|f| 
+    status.scan(/on\.gif\"> \[(?:\d{1,3}\.?){4}\] <b>(lab\d-\d+)/).flatten.each {|host|
+      f.puts host
+    }
+  }
+end
+
+hosts = File.readlines(cadeHostsFile)
+host = hosts[rand(hosts.length)].strip
+print("#{host}.eng.utah.edu")

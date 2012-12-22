@@ -1,0 +1,11 @@
+[user]
+	name = Joel Hough
+	email = joel@joelhough.com
+
+[url "joelhough.com:git.joelhough.com/repos/"]
+	insteadOf = "jh:"
+	pushInsteadOf = "jh:"
+	
+[url "git@github.com:JoelHough/"]
+     insteadOf = "gh:"
+     pushInsteadOf = "gh:"

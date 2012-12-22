@@ -1,0 +1,1 @@
+reflector -c "United States" -l 10 -f 5 --sort rate --save /etc/pacman.d/mirrorlist
