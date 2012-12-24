@@ -1,0 +1,47 @@
+#!/bin/bash
+# Modified to return volume
+# Credit to Roland Latour
+# http://www.freak-search.com/en/thread/4707111/q_volume_control,_xfce
+
+# Find default sink
+sink=`pacmd info|grep "Default sink name"|awk '{print $4}'`
+
+# Now we need to find volume of default sink
+# get line# of start of definition for default sink (plus 1, actually)
+let line=`pacmd list-sinks|grep -n $sink|sed '{s/://}'|awk '{print $1}'`
+
+# index down a bit for volume line
+let vol_line=($line + 6)
+volume=`pacmd list-sinks|awk 'NR=="'"$vol_line"'"{print $3}'|sed '{s/%//}'`
+
+let mute_line=($line + 12)
+mute=`pacmd list-sinks|awk 'NR==i"'"$mute_line"'"{print $2}'`
+
+[[ "$mute" == "yes" ]] && echo -n "<fc=yellow>×</fc> "
+#echo $volume
+
+for i in `seq 21 20 101`
+do
+    if [[ $volume -gt $i ]]
+    then
+        echo -n "<fc=#00FF2B>•</fc>"
+    elif [[ $volume -lt `expr $i - 20` ]]
+    then
+        echo -n "<fc=#606060>·</fc>"
+    elif [[ $volume -lt `expr $i - 16` ]]
+    then
+        echo -n "<fc=#17361C>•</fc>"
+    elif [[ $volume -lt `expr $i - 12` ]]
+    then
+        echo -n "<fc=#14481C>•</fc>"
+    elif [[ $volume -lt `expr $i - 8` ]]
+    then
+        echo -n "<fc=#166A24>•</fc>"
+    elif [[ $volume -lt `expr $i - 4` ]]
+    then
+        echo -n "<fc=#0E9024>•</fc>"
+    else
+        echo -n "<fc=#00FF2B>•</fc>"
+    fi
+done
+echo
